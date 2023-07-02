@@ -10,12 +10,25 @@ const Display = (props) => (
   <div>{props.text} {props.value}</div>
 )
 
+const Statistics = ({ good,neutral,bad }) => {
+  const total = good + neutral + bad;
+  return(
+    <>
+    <Display text="good" value={good} />
+    <Display text="neutral" value={neutral} />
+    <Display text="bad" value={bad} />
+    <Display text="all" value= {total}/>
+    <Display text="average" value= {(good - bad) / total}/>
+    <Display text="postive" value= {`${good / total}%`}/>
+    </>
+  )
+}
 function App() {
 
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
-  const total = good + neutral + bad;
+
   const incrementValue = (value, setFunction) => {
     setFunction(value + 1);
   }
@@ -29,12 +42,7 @@ function App() {
       <Button action= {() => incrementValue(bad, setBad)} text="bad"/>
 
       <h1>statistics</h1>
-      <Display text="good" value={good} />
-      <Display text="neutral" value={neutral} />
-      <Display text="bad" value={bad} />
-      <Display text="all" value= {total}/>
-      <Display text="average" value= {(good - bad) / total}/>
-      <Display text="postive" value= {`${good / total}%`}/>
+      <Statistics good = {good} neutral = {neutral} bad = {bad}/>
     </>
 
   );
