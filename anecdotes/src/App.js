@@ -13,17 +13,30 @@ const App = () => {
     'hi'
   ]
   
-  const generateRandom = () =>{
-    return Math.floor(Math.random() * anecdotes.length);
-  }
 
+  
   const [selected, setSelected] = useState(0);
   const [voteCounts, setVoteCount] = useState({0: 0});
   const voteCountsChangeable = {...voteCounts};
 
-
+  const generateRandom = () =>{
+    return Math.floor(Math.random() * anecdotes.length);
+  }
+  const findLargestAsMessage = () =>{
+    let greatestVal = 0;
+    let greatestIndex = 0;
+    for(const i in voteCounts){
+      const val = voteCounts[i];
+      if(val >= greatestVal){
+        greatestVal = val;
+        greatestIndex = i;
+      } 
+    }
+    return (anecdotes[greatestIndex] + " has " + greatestVal + " votes");
+  }
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <div> {anecdotes[selected]} </div>
       <button onClick={()=>{
         let random = generateRandom();
@@ -40,7 +53,11 @@ const App = () => {
       }}>
         vote
       </button>
+
       <div>vote count: {voteCounts[selected]}</div>
+
+      <h1>Anecdote with the most votes</h1>
+      <div>{findLargestAsMessage()}</div>
     </>
     
   )
